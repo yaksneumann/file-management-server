@@ -1,0 +1,141 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "API for file upload",
+    "description" : "This is a simple API for file upload",
+    "contact" : {
+      "email" : "you@your-company.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "users",
+    "description" : "Operations available to general users"
+  } ],
+  "paths" : {
+    "/documents" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "gets all files",
+        "description" : "gets all Documents",
+        "operationId" : "GetDocuments",
+        "responses" : {
+          "200" : {
+            "description" : "returns a list of Documents",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Document"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/document/{id}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "gets a file",
+        "description" : "download a file by id",
+        "operationId" : "DownloadDocument",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "pass the file's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "returns a Document",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/document" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "uploads a file",
+        "description" : "Uploads a file to impress הפניקס",
+        "operationId" : "UploadDocument",
+        "requestBody" : {
+          "description" : "Document to upload",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Document"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "file uploaded"
+          },
+          "400" : {
+            "description" : "פעולת ההעלאת הקובץ נכשלה"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Document" : {
+        "required" : [ "documentDate", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "haphenix policy"
+          },
+          "documentDate" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2016-08-29T09:12:33.001Z"
+          }
+        },
+        "example" : {
+          "documentDate" : "2016-08-29T09:12:33.001Z",
+          "name" : "haphenix policy",
+          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        }
+      }
+    }
+  }
+}
