@@ -35,6 +35,7 @@ namespace IO.Swagger.Controllers
 
         public UsersApiController(IConfiguration configuration)
         {
+            //     C:\\Users\\whywh\\OneDrive\\Documents\\my-files\\
             documentDirectory = configuration.GetValue<string>("AppSettings:DocumentDirectory");
             fileDirectory = configuration.GetValue<string>("AppSettings:FileDirectory");
             fileDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), documentDirectory, fileDirectory);
@@ -57,7 +58,7 @@ namespace IO.Swagger.Controllers
             Document document;
 
             if (!System.IO.File.Exists(fileDirectory + fileName))
-                return StatusCode(400, "אתה עובד עלי? אין כזה קובץ");
+                return StatusCode(400, "אין כזה קובץ");
 
             document = new Document();
             document.Name = fileName;

@@ -16,10 +16,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200/")
+            policy.AllowAnyOrigin() //.WithOrigins("http://localhost:4200/")
                   .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
+                  .AllowAnyMethod();
+                //   .AllowCredentials();
         });
 });
 
